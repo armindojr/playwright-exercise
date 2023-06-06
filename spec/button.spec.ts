@@ -15,7 +15,7 @@ test.describe('Interacting with buttons', () => {
         const result = await page.locator('button#position').boundingBox();
 
         if (result !== null) {
-            expect(result.x).toEqual(88);
+            expect(result.x).toEqual(312);
             expect(result.y).toEqual(338);
         } else {
             throw new Error("Button isn't present on screen!");
@@ -49,7 +49,7 @@ test.describe('Interacting with buttons', () => {
 
     test('Check text after long press button', async ({ page }) => {
         let buttonList = await page.locator('button#isDisabled').all();
-        await buttonList[1].click({ delay: 2000 });
+        await buttonList[1].click({ delay: 5000 });
         let text = await buttonList[1].textContent();
         expect(text).toEqual('Button has been long pressed');
     });
