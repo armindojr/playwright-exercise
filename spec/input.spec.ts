@@ -29,11 +29,11 @@ test.describe('Interacting with inputs', () => {
 
     test('Checking if input is disabled', async ({ page }) => {
         let status = await page.locator('input#noEdit').isDisabled();
-        expect(status).toEqual(true);
+        expect(status).toBeTruthy();
     });
 
     test('Checking if input is read only', async ({ page }) => {
         let status = await page.locator('input#dontwrite').isEditable();
-        expect(status).toEqual(false);
+        expect(status).toBeFalsy();
     });
 });
