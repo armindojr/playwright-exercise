@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { getElementCoordinates } from '../utils';
 
 test.describe('Interacting with buttons', () => {
 
@@ -12,14 +13,11 @@ test.describe('Interacting with buttons', () => {
     });
 
     test('Getting button position on screen', async ({ page }) => {
-        const result = await page.locator('button#position').boundingBox();
+        const button = page.locator('button#position')
+        const result = await getElementCoordinates(button);
 
-        if (result !== null) {
-            expect(result.x).toEqual(312);
-            expect(result.y).toEqual(338);
-        } else {
-            throw new Error("Button isn't present on screen!");
-        }
+        expect(result.x).toEqual(312);
+        expect(result.y).toEqual(338);
     });
 
     test('Getting button color from css', async ({ page }) => {
@@ -31,15 +29,12 @@ test.describe('Interacting with buttons', () => {
     });
 
     test('Getting button height and width', async ({ page }) => {
-        const result = await page.locator('button#property').boundingBox();
+        const button = page.locator('button#property')
+        const result = await getElementCoordinates(button);
 
-        if (result !== null) {
-            expect(result.height).toEqual(40);
-            expect(result.width).toBeGreaterThan(176);
-            expect(result.width).toBeLessThan(177);
-        } else {
-            throw new Error("Button isn't present on screen!");
-        }
+        expect(result.height).toEqual(40);
+        expect(result.width).toBeGreaterThan(176);
+        expect(result.width).toBeLessThan(177);
     });
 
     test('Checking if button is disabled', async ({ page }) => {

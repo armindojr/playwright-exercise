@@ -39,7 +39,9 @@ test.describe('Interacting with alerts', () => {
 
     test('Handling sweet alert', async ({ page }) => {
         await page.locator('button#modern').click();
-        let text = page.locator('div.modal');
-        expect(text).toHaveClass(/active/);
+        let modal = page.locator('div.modal.is-active');
+        await modal.waitFor({ state: 'visible' });
+        let text = page.locator('p.title');
+        expect(await text.textContent()).toContain('Modern Alert');
     });
 });
