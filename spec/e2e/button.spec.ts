@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { getElementCoordinates } from '../utils';
+import { getElementCoordinates } from '../../utils';
 
 test.describe('Interacting with buttons', () => {
 

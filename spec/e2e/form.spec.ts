@@ -1,5 +1,5 @@
 import { test } from '@playwright/test';
-import { FormsPage } from '../pageObject/forms.page';
+import { FormsPage } from '../../pageObject/forms.page';
 
 test.describe('Interacting with form', () => {
     test.beforeEach(async ({ page }) => {
