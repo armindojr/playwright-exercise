@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
 import { auth } from '../../../utils';
 
-test.describe('Creating booking', () => {
-    let token: String;
+test.describe('Create booking', () => {
+    let token: string;
     
     test.beforeAll(async () => {
         token = await auth();

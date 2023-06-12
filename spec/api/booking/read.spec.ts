@@ -1,8 +1,8 @@
 import { test, expect } from '@playwright/test';
 import { auth } from '../../../utils';
 
-test.describe('Retrieving booking information', () => {
-    let token: String;
+test.describe('Read booking', () => {
+    let token: string;
     
     test.beforeAll(async () => {
         token = await auth();
@@ -30,5 +30,17 @@ test.describe('Retrieving booking information', () => {
         let res = await request.get('/booking/2');
 
         expect(res.status()).toEqual(200);
+    });
+
+    test('Get booking information with missing id', async ({ request }) => {
+        let res = await request.get('/booking/22222222222222222');
+
+        expect(res.status()).toEqual(404);
+    });
+
+    test('Get booking information with invalid id', async ({ request }) => {
+        let res = await request.get('/booking/aaaaa');
+
+        expect(res.status()).toEqual(404);
     });
 });
