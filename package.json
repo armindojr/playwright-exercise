@@ -10,10 +10,9 @@
     "keywords": [],
     "author": "",
     "license": "GPL-3.0-only",
-    "devDependencies": {
-        "@playwright/test": "^1.35.0"
-    },
     "dependencies": {
-        "@faker-js/faker": "^8.0.2"
+        "@playwright/test": "^1.35.0",
+        "@faker-js/faker": "^8.0.2",
+        "dotenv": "^16.1.4"
     }
 }

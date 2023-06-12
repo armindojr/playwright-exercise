@@ -1,4 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
+import dotenv from 'dotenv';
+dotenv.config();
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -22,6 +24,7 @@ export default defineConfig({
         {
             name: 'E2E',
             testDir: './spec/e2e',
+            testMatch: /.*\.spec\.ts/,
             use: { 
                 ...devices['Desktop Chrome'],
                 baseURL: 'https://letcode.in',
@@ -32,12 +35,28 @@ export default defineConfig({
             },
         },
 
+        // Api project requirements
+        {
+            name: 'setup',
+            testDir: './spec/api',
+            testMatch: /setup\.ts/,
+        },
+
+        {
+            name: 'cleanup',
+            testDir: './spec/api',
+            testMatch: /teardown\.ts/,
+        },
+
         {
             name: 'API',
             testDir: './spec/api',
+            testMatch: /.*\.spec\.ts/,
             use: { 
-                baseURL: 'https://pokeapi.co',
-            }
+                baseURL: 'https://restful-booker.herokuapp.com',
+            },
+            dependencies: ['setup'],
+            teardown: 'cleanup'
         }
     ],
 
