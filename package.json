@@ -4,15 +4,28 @@
     "description": "Training playwright automation skills with dummy website",
     "main": "index.js",
     "scripts": {
+        "postinstall": "npx playwright install",
         "test": "npx playwright test",
-        "test:ui": "npx playwright test --ui"
+        "test:ui": "npx playwright test --ui --project=E2E",
+        "report": "npx playwright show-report",
+        "lint": "eslint . --ext .ts",
+        "lint:fix": "eslint . --ext .ts --fix"
     },
     "keywords": [],
     "author": "",
     "license": "GPL-3.0-only",
     "dependencies": {
-        "@playwright/test": "^1.35.0",
-        "@faker-js/faker": "^8.0.2",
-        "dotenv": "^16.1.4"
+        "@faker-js/faker": "^8.2.0",
+        "@playwright/test": "^1.39.0",
+        "dotenv": "^16.3.1"
+    },
+    "devDependencies": {
+        "@typescript-eslint/eslint-plugin": "^6.9.0",
+        "@typescript-eslint/parser": "^6.9.0",
+        "eslint": "^8.52.0"
+    },
+    "engines": {
+        "node": ">=18.0.0",
+        "npm": ">9.0.0"
     }
 }

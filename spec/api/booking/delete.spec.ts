@@ -9,7 +9,7 @@ test.describe('Delete booking', () => {
         token = await auth();
 
         // Create booking to be deleted
-        let res = await request.post('/booking', {
+        const res = await request.post('/booking', {
             data: {
                 firstname: 'Jim',
                 lastname: 'Brown',
@@ -23,12 +23,12 @@ test.describe('Delete booking', () => {
             }
         });
 
-        let resJson = await res.json();
+        const resJson = await res.json();
         bookingid = resJson.bookingid;
     });
 
     test('Delete existing booking', async ({ request }) => {
-        let res = await request.delete(`/booking/${bookingid}`, {
+        const res = await request.delete(`/booking/${bookingid}`, {
             headers: {
                 Cookie: `token=${token}`
             }
@@ -38,7 +38,7 @@ test.describe('Delete booking', () => {
     });
 
     test('Delete booking with missing id', async ({ request }) => {
-        let res = await request.delete(`/booking/22222222222222222`, {
+        const res = await request.delete(`/booking/22222222222222222`, {
             headers: {
                 Cookie: `token=${token}`
             }
@@ -48,7 +48,7 @@ test.describe('Delete booking', () => {
     });
 
     test('Delete booking with invalid id', async ({ request }) => {
-        let res = await request.delete(`/booking/aaaaa`, {
+        const res = await request.delete(`/booking/aaaaa`, {
             headers: {
                 Cookie: `token=${token}`
             }

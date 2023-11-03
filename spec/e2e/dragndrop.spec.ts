@@ -24,6 +24,7 @@ test.describe('Interacting with drag and drop element', () => {
         const draggable = page.locator('div#draggable');
         const destination = page.locator('div#droppable');
         await draggable.dragTo(destination);
+
         expect(await destination.locator('p').textContent()).toEqual('Dropped!');
     });
 
@@ -41,6 +42,7 @@ test.describe('Interacting with drag and drop element', () => {
         await page.mouse.up();
 
         const items = await page.locator('div#cdk-drop-list-1 > div').all();
+
         expect(items.length).toEqual(6);
     });
 
@@ -55,6 +57,7 @@ test.describe('Interacting with drag and drop element', () => {
         await page.mouse.up();
 
         const items = await page.locator('div.ui-selected').all();
+
         expect(items.length).toEqual(9);
     });
 
@@ -70,6 +73,7 @@ test.describe('Interacting with drag and drop element', () => {
         await page.locator('button').click();
         const items = await page.locator('p.has-text-primary-light').textContent();
         const countries = items?.split(' - ');
+
         expect(countries?.length).toEqual(20);
     });
 });

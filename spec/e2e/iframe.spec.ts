@@ -1,28 +1,28 @@
 import { test, expect } from '@playwright/test';
+import { IframePage } from '../../pageObject/iframe.page';
 
 test.describe('Interacting with iframes', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/frame');
+        const iframe = new IframePage(page);
+
+        await iframe.goto();
     });
 
     test('Filling inputs inside iframe', async ({ page }) => {
-        let frame = page.frameLocator('iframe#firstFr');
+        const iframe = new IframePage(page);
 
-        let inputName = frame.locator('input[name="fname"]');
-        await inputName.fill('Armindo');
-        expect(await inputName.inputValue()).toEqual('Armindo');
+        await iframe.inputName.fill('Armindo');
+        await iframe.inputLname.fill('Junior');
 
-        let inputLname = frame.locator('input[name="lname"]');
-        await inputLname.fill('Junior');
-        expect(await inputLname.inputValue()).toEqual('Junior');
+        expect(await iframe.inputName.inputValue()).toEqual('Armindo');
+        expect(await iframe.inputLname.inputValue()).toEqual('Junior');
     });
 
     test('Filling an input inside nested iframe', async ({ page }) => {
-        let frame = page.frameLocator('iframe#firstFr');
-        let secFrame = frame.frameLocator('iframe[src="innerFrame"]');
-    
-        let inputEmail = secFrame.locator('input[name="email"]')
-        await inputEmail.fill('test@mailinator.com');
-        expect(await inputEmail.inputValue()).toEqual('test@mailinator.com');
+        const iframe = new IframePage(page);
+
+        await iframe.inputEmail.fill('test@mailinator.com');
+
+        expect(await iframe.inputEmail.inputValue()).toEqual('test@mailinator.com');
     });
 });

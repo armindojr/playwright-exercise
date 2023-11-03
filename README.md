@@ -1,7 +1,7 @@
 # Playwright Exercise
 
 ## Description
-Training playwright e2e and api automation skills with dummy website and dummy endpoint
+Training playwright e2e and api automation skills with dummy website and dummy endpoint. This project uses eslint to keep code clean to read.
 
 ## Motivation
 I've created this exercise to improve and train my skills with `Playwright`, using a well known dummy website and endpoint to do basic things on frontend or create some basic requests that can possibly be used on another website or scenarios.

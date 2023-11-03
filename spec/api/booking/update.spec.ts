@@ -10,7 +10,7 @@ test.describe('Update booking', () => {
 
     // Partial update with PUT method
     test('Complete update existing booking information', async ({ request }) => {
-        let res = await request.put('/booking/1', {
+        const res = await request.put('/booking/1', {
             headers: {
                 Cookie: `token=${token}`
             },
@@ -27,14 +27,14 @@ test.describe('Update booking', () => {
             }
         });
 
-        let resJson = await res.json();
+        const resJson = await res.json();
 
         expect(res.status()).toEqual(200);
         expect(resJson.firstname).toEqual('James');
     });
 
     test('Complete update existing booking with invalid information', async ({ request }) => {
-        let res = await request.put('/booking/1', {
+        const res = await request.put('/booking/1', {
             headers: {
                 Cookie: `token=${token}`
             },
@@ -47,7 +47,7 @@ test.describe('Update booking', () => {
     });
 
     test('Complete update booking information with missing id', async ({ request }) => {
-        let res = await request.put('/booking/22222222222222222', {
+        const res = await request.put('/booking/22222222222222222', {
             headers: {
                 Cookie: `token=${token}`
             },
@@ -68,7 +68,7 @@ test.describe('Update booking', () => {
     });
 
     test('Complete update booking information with invalid id', async ({ request }) => {
-        let res = await request.put('/booking/aaaaa', {
+        const res = await request.put('/booking/aaaaa', {
             headers: {
                 Cookie: `token=${token}`
             },
@@ -90,7 +90,7 @@ test.describe('Update booking', () => {
 
     // Partial update with PATCH method
     test('Partial update existing booking information', async ({ request }) => {
-        let res = await request.patch('/booking/1', {
+        const res = await request.patch('/booking/1', {
             headers: {
                 Cookie: `token=${token}`
             },
@@ -99,14 +99,14 @@ test.describe('Update booking', () => {
             }
         });
 
-        let resJson = await res.json();
+        const resJson = await res.json();
 
         expect(res.status()).toEqual(200);
         expect(resJson.firstname).toEqual('James');
     });
 
     test('Partial update booking information with missing id', async ({ request }) => {
-        let res = await request.patch('/booking/22222222222222222', {
+        const res = await request.patch('/booking/22222222222222222', {
             headers: {
                 Cookie: `token=${token}`
             },
@@ -119,7 +119,7 @@ test.describe('Update booking', () => {
     });
 
     test('Partial update booking information with invalid id', async ({ request }) => {
-        let res = await request.patch('/booking/aaaaa', {
+        const res = await request.patch('/booking/aaaaa', {
             headers: {
                 Cookie: `token=${token}`
             },

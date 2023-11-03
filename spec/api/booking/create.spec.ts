@@ -1,15 +1,8 @@
 import { test, expect } from '@playwright/test';
-import { auth } from '../../../utils';
 
 test.describe('Create booking', () => {
-    let token: string;
-    
-    test.beforeAll(async () => {
-        token = await auth();
-    });
-
     test('Create basic booking information', async ({ request }) => {
-        let res = await request.post('/booking', {
+        const res = await request.post('/booking', {
             data: {
                 firstname: 'Jim',
                 lastname: 'Brown',
@@ -23,14 +16,14 @@ test.describe('Create booking', () => {
             }
         });
 
-        let resJson = await res.json();
+        const resJson = await res.json();
 
         expect(res.status()).toEqual(200);
         expect(resJson.booking.firstname).toEqual('Jim');
     });
 
     test('Create booking with invalid information', async ({ request }) => {
-        let res = await request.post('/booking', {
+        const res = await request.post('/booking', {
             data: {
                 firstname: 'Jim',
             }

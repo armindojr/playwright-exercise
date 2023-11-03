@@ -1,22 +1,32 @@
 import { test, expect } from '@playwright/test';
+import { WindowPage } from '../../pageObject/window.page';
 
 test.describe('Interacting with window and tabs', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/windows');
+        const window = new WindowPage(page);
+
+        await window.goto();
     });
 
     test('Handling new tab', async ({ page, context }) => {
-        const [newtab] = await Promise.all([
-            context.waitForEvent('page'),
-            page.locator('button#home').click()
-        ]);
+        const window = new WindowPage(page, context);
 
-        // Below commented code provides an example of another way to handle new tab
-        // const popupPromise = page.waitForEvent('popup');
-        // page.locator('button#home').click();
-        // const newtab = await popupPromise;
+        const newPagePromise = window.pagePromise();
+        await window.btnHome.click();
+        const newPage = await newPagePromise;
 
-        expect(await newtab.title()).toEqual('LetCode with Koushik');
+        expect(await newPage?.title()).toEqual('LetCode with Koushik');
+        expect(await page.title()).toEqual('Window handling - LetCode');
+    });
+
+    test('Handling new tab - another method', async ({ page, context }) => {
+        const window = new WindowPage(page, context);
+
+        const popupPromise = window.popupPromise();
+        await window.btnHome.click();
+        const newPage = await popupPromise;
+
+        expect(await newPage?.title()).toEqual('LetCode with Koushik');
         expect(await page.title()).toEqual('Window handling - LetCode');
     });
 });

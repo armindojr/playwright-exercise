@@ -1,39 +1,52 @@
 import { test, expect } from '@playwright/test';
+import { InputPage } from '../../pageObject/input.page';
 
 test.describe('Interacting with inputs', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/edit');
+        const input = new InputPage(page);
+
+        await input.goto();
     });
 
     test('Filling an input', async ({ page }) => {
-        await page.fill('input#fullName', 'Armindo Junior');
-        let text = await page.locator('input#fullName').inputValue();
-        expect(text).toEqual('Armindo Junior');
+        const input = new InputPage(page);
+        const name = 'Armindo Junior';
+
+        await input.inputFullName.fill(name);
+
+        expect(await input.inputFullName.inputValue()).toEqual(name);
     });
 
     test('Pressing key', async ({ page }) => {
-        await page.fill('input#join', 'Foo Bar');
+        const input = new InputPage(page);
+
+        await input.inputJoin.fill('Foo Bar');
         await page.keyboard.press('Tab');
     });
 
     test('Checking text', async ({ page }) => {
-        let text = await page.locator('input#getMe').inputValue();
-        expect(text).toEqual('ortonikc');
+        const input = new InputPage(page);
+
+        expect(await input.inputGetMe.inputValue()).toEqual('ortonikc');
     });
 
     test('Clearing input', async ({ page }) => {
-        await page.locator('input#clearMe').clear();
-        let text = await page.locator('input#clearMe').inputValue();
-        expect(text).toEqual('');
+        const input = new InputPage(page);
+
+        await input.inputClearMe.clear();
+
+        expect(await input.inputClearMe.inputValue()).toEqual('');
     });
 
     test('Checking if input is disabled', async ({ page }) => {
-        let status = await page.locator('input#noEdit').isDisabled();
-        expect(status).toBeTruthy();
+        const input = new InputPage(page);
+
+        expect(await input.inputDisabled.isDisabled()).toBeTruthy();
     });
 
     test('Checking if input is read only', async ({ page }) => {
-        let status = await page.locator('input#dontwrite').isEditable();
-        expect(status).toBeFalsy();
+        const input = new InputPage(page);
+
+        expect(await input.inputReadOnly.isEditable()).toBeFalsy();
     });
 });

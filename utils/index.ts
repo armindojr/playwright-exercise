@@ -3,7 +3,7 @@ import * as storage from '../auth/api.json';
 
 export async function getElementCoordinates(el: Locator) {
     await el.waitFor({ state: 'visible' });
-    let result = await el.boundingBox();
+    const result = await el.boundingBox();
 
     if (result) {
         return result;

@@ -1,7 +1,8 @@
 import { Locator, Page } from '@playwright/test';
 import { fakerPT_BR as faker } from '@faker-js/faker';
+import { Base } from './base';
 
-export class FormsPage {
+export class FormsPage extends Base {
     readonly page: Page;
     readonly firstName: Locator;
     readonly lastName: Locator;
@@ -14,11 +15,12 @@ export class FormsPage {
     readonly postalCode: Locator;
     readonly country: Locator;
     readonly birthDay: Locator;
-    readonly gender: Function;
+    readonly gender: (option: string) => Locator;
     readonly termsAgreement: Locator;
     readonly submit: Locator;
 
     constructor(page: Page) {
+        super(page);
         this.page = page;
         this.firstName = this.page.locator('input#firstname');
         this.lastName = this.page.locator('input#lasttname');
@@ -31,17 +33,21 @@ export class FormsPage {
         this.postalCode = this.page.locator('input#postalcode');
         this.country = this.page.locator('div:nth-child(5) > div:nth-child(2) > div > div > div > select');
         this.birthDay = this.page.locator('input#Date');
-        this.gender = (option: string) => { return this.page.locator(`input#${option}`) };
+        this.gender = (option) => { return this.page.locator(`input#${option}`); };
         this.termsAgreement = this.page.locator('input[type="checkbox"]');
         this.submit = this.page.locator('input[type="submit"]');
     }
 
+    async goto() {
+        await super.goto('/forms');
+    }
+
     async fillForm() {
-        let fName = faker.person.firstName();
-        let lName = faker.person.lastName();
-        let email = faker.internet.email({ firstName: fName, lastName: lName, provider: 'mailinator.com' });
-        let phone = faker.helpers.replaceSymbolWithNumber('9#########');
-        let option = faker.helpers.arrayElement(['male', 'female', 'trans']);
+        const fName = faker.person.firstName();
+        const lName = faker.person.lastName();
+        const email = faker.internet.email({ firstName: fName, lastName: lName, provider: 'mailinator.com' });
+        const phone = faker.helpers.replaceSymbolWithNumber('9#########');
+        const option = faker.helpers.arrayElement(['male', 'female', 'trans']);
 
         await this.firstName.fill(fName);
         await this.lastName.fill(lName);
@@ -56,6 +62,5 @@ export class FormsPage {
         await this.birthDay.fill('2000-01-01');
         await this.gender(option).check();
         await this.termsAgreement.check();
-        await this.submit.click();
     }
 }

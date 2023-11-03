@@ -1,14 +1,22 @@
 import { test, expect } from '@playwright/test';
+import { ShadowPage } from '../../pageObject/shadow.page';
 
 test.describe('Interacting with shadow DOM', () => {
     test.beforeEach(async ({ page }) => {
-        await page.goto('/shadow');
+        const shadow = new ShadowPage(page);
+
+        await shadow.goto();
     });
 
     test('Filling inputs inside shadow DOM', async ({ page }) => {
-        await page.locator('input#fname').fill('Armindo');
+        const shadow = new ShadowPage(page);
+
+        await shadow.inputFirstName.fill('Armindo');
+
+        expect(await shadow.inputFirstName.inputValue()).toEqual('Armindo');
+
         // Playwright doesn't works with closed shadow dom
-        // await page.locator('input#lname').fill('Junior');
-        // await page.locator('input#email').fill('test@mailinator.com');
+        // await shadow.inputLastName.fill('Junior');
+        // await shadow.inputEmail.fill('test@mailinator.com');
     });
 });
