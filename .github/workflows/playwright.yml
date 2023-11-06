@@ -7,6 +7,7 @@ on:
 jobs:
   playwright:
     name: 'Playwright API Tests'
+    timeout-minutes: 30
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.39.0-jammy
@@ -19,3 +20,13 @@ jobs:
         run: npm ci
       - name: Run your tests
         run: npx playwright test --project=API
+        env:
+          CI: true
+          API_USER: ${{ secrets.API_USER }}
+          API_PASS: ${{ secrets.API_PASS }}
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 5
