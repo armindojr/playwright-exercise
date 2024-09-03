@@ -2,44 +2,44 @@ import { test, expect } from '@playwright/test';
 import { AlertPage } from '../../pageObject/alert.page';
 
 test.describe('Interacting with alerts', () => {
-    test.beforeEach(async ({ page }) => {
-        const alerts = new AlertPage(page);
-        
-        await alerts.goto();
-    });
+  test.beforeEach(async ({ page }) => {
+    const alerts = new AlertPage(page);
 
-    test('Handling accept alert', async ({ page }) => {
-        const alerts = new AlertPage(page);
+    await alerts.goto();
+  });
 
-        alerts.handleDialog({ type: 'alert', text: 'Hey! Welcome to LetCode' });
+  test('Handling accept alert', async ({ page }) => {
+    const alerts = new AlertPage(page);
 
-        await alerts.btnAccept.click();
-    });
+    alerts.handleDialog({ type: 'alert', text: 'Hey! Welcome to LetCode' });
 
-    test('Handling confirm alert', async ({ page }) => {
-        const alerts = new AlertPage(page);
+    await alerts.btnAccept.click();
+  });
 
-        alerts.handleDialog({ type: 'confirm', text: 'Are you happy with LetCode?' });
+  test('Handling confirm alert', async ({ page }) => {
+    const alerts = new AlertPage(page);
 
-        await alerts.btnConfirm.click();
-    });
+    alerts.handleDialog({ type: 'confirm', text: 'Are you happy with LetCode?' });
 
-    test('Handling prompt alert', async ({ page }) => {
-        const alerts = new AlertPage(page);
-        const msg = 'Armindo Junior';
+    await alerts.btnConfirm.click();
+  });
 
-        alerts.handleDialog({ type: 'prompt', text: 'Enter your name', msg });
-        await alerts.btnPrompt.click();
+  test('Handling prompt alert', async ({ page }) => {
+    const alerts = new AlertPage(page);
+    const msg = 'Armindo Junior';
 
-        expect(await alerts.textMyName.textContent()).toContain(msg);
-    });
+    alerts.handleDialog({ type: 'prompt', text: 'Enter your name', msg });
+    await alerts.btnPrompt.click();
 
-    test('Handling sweet alert', async ({ page }) => {
-        const alerts = new AlertPage(page);
+    expect(await alerts.textMyName.textContent()).toContain(msg);
+  });
 
-        await alerts.btnSweetAlert.click();
-        await alerts.modal.waitFor({ state: 'visible' });
+  test('Handling sweet alert', async ({ page }) => {
+    const alerts = new AlertPage(page);
 
-        expect(await alerts.textSweetAlert.textContent()).toContain('Modern Alert');
-    });
+    await alerts.btnSweetAlert.click();
+    await alerts.modal.waitFor({ state: 'visible' });
+
+    expect(await alerts.textSweetAlert.textContent()).toContain('Modern Alert');
+  });
 });
