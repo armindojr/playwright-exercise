@@ -1,7 +1,7 @@
 import { Locator, Page } from '@playwright/test';
-import { Base } from './base';
+import Base from './base.page';
 
-export class AjaxPage extends Base {
+export default class AjaxPage extends Base {
   readonly page: Page;
   readonly btn: Locator;
   readonly successMessage: Locator;

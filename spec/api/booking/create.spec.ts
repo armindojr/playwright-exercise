@@ -1,34 +1,15 @@
-import { test, expect } from '@playwright/test';
+// import pw with fixtures
+import { test } from '../../../fixtures/fixtures';
 
 test.describe('Create booking', () => {
-  test('Create basic booking information', async ({ request }) => {
-    const res = await request.post('/booking', {
-      data: {
-        firstname: 'Jim',
-        lastname: 'Brown',
-        totalprice: 111,
-        depositpaid: true,
-        bookingdates: {
-          checkin: '2018-01-01',
-          checkout: '2019-01-01'
-        },
-        additionalneeds: 'Breakfast'
-      }
-    });
-
-    const resJson = await res.json();
-
-    expect(res.status()).toEqual(200);
-    expect(resJson.booking.firstname).toEqual('Jim');
+  test('Create basic booking information', async ({ bookingRoute }) => {
+    const res = await bookingRoute.createBooking();
+    await bookingRoute.validateStatus(res, 200);
+    await bookingRoute.validateCreation(res, 'Jim');
   });
 
-  test('Create booking with invalid information', async ({ request }) => {
-    const res = await request.post('/booking', {
-      data: {
-        firstname: 'Jim'
-      }
-    });
-
-    expect(res.status()).toEqual(500);
+  test('Create booking with invalid information', async ({ bookingRoute }) => {
+    const res = await bookingRoute.createBooking({ firstname: 'Jim' });
+    await bookingRoute.validateStatus(res, 500);
   });
 });

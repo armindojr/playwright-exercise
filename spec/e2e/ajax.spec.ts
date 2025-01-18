@@ -1,30 +1,24 @@
-import { test, expect } from '@playwright/test';
-import { AjaxPage } from '../../pageObject/ajax.page';
+// import pw with fixtures
+import { test, expect } from '../../fixtures/fixtures';
 
 test.describe('Interacting with AJAX requests', () => {
-  test.beforeEach(async ({ page }) => {
-    const ajax = new AjaxPage(page);
-
-    await ajax.goto();
+  test.beforeEach(async ({ ajaxPage }) => {
+    await ajaxPage.goto();
   });
 
-  test('Handling AJAX requests', async ({ page }) => {
-    const ajax = new AjaxPage(page);
+  test('Handling AJAX requests', async ({ ajaxPage }) => {
+    await ajaxPage.btn.click();
+    await ajaxPage.successMessage.waitFor({ state: 'visible', timeout: 18000 });
 
-    await ajax.btn.click();
-    await ajax.successMessage.waitFor({ state: 'visible', timeout: 18000 });
-
-    expect(await ajax.successMessage.textContent()).toContain('AJAX');
+    expect(await ajaxPage.successMessage.textContent()).toContain('AJAX');
   });
 
-  test('Handling AJAX requests with mocked response', async ({ page }) => {
-    const ajax = new AjaxPage(page);
+  test('Handling AJAX requests with mocked response', async ({ ajaxPage }) => {
     const text = 'Mocked Response';
+    await ajaxPage.mockData(text);
+    await ajaxPage.btn.click();
+    await ajaxPage.successMessage.waitFor({ state: 'visible', timeout: 16000 });
 
-    await ajax.mockData(text);
-    await ajax.btn.click();
-    await ajax.successMessage.waitFor({ state: 'visible', timeout: 16000 });
-
-    expect(await ajax.successMessage.textContent()).toEqual(text);
+    expect(await ajaxPage.successMessage.textContent()).toEqual(text);
   });
 });

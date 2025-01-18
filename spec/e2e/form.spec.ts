@@ -1,18 +1,14 @@
-import { test } from '@playwright/test';
-import { FormsPage } from '../../pageObject/forms.page';
+// import pw with fixtures
+import { test } from '../../fixtures/fixtures';
 
 test.describe('Interacting with form', () => {
-  test.beforeEach(async ({ page }) => {
-    const form = new FormsPage(page);
-
-    await form.goto();
+  test.beforeEach(async ({ formsPage }) => {
+    await formsPage.goto();
   });
 
-  test('Filling form with random data', async ({ page }) => {
-    const form = new FormsPage(page);
-
-    await form.fillForm();
-    await form.submit.click();
+  test('Filling form with random data', async ({ formsPage, page }) => {
+    await formsPage.fillForm();
+    await formsPage.submit.click();
     await page.waitForTimeout(2000);
   });
 });

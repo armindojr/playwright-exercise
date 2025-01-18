@@ -1,6 +1,6 @@
 import { Locator, Page } from '@playwright/test';
 
-export class Base {
+export default class Base {
   readonly page: Page;
   readonly btnWorkspaces: Locator;
 
@@ -13,5 +13,16 @@ export class Base {
 
   async goto(path: string) {
     await this.page.goto(path);
+  }
+
+  async getElementCoordinates(el: Locator) {
+    await el.waitFor({ state: 'visible' });
+    const result = await el.boundingBox();
+
+    if (result) {
+      return result;
+    } else {
+      throw new Error("Element doesn't have boundary or is inaccessible!");
+    }
   }
 }

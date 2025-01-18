@@ -1,7 +1,7 @@
 import { BrowserContext, Locator, Page } from '@playwright/test';
-import { Base } from './base';
+import Base from './base.page';
 
-export class WindowPage extends Base {
+export default class WindowPage extends Base {
   readonly page: Page;
   readonly context: BrowserContext | undefined;
   readonly btnHome: Locator;

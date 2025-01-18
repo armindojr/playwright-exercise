@@ -1,11 +1,12 @@
-import { test, expect } from '@playwright/test';
-import { getElementCoordinates } from '../../utils';
+// import pw with fixtures
+import { test, expect } from '../../fixtures/fixtures';
 
+// TODO: Create page for dnd
 test.describe('Interacting with drag and drop element', () => {
-  test('Drag element within box', async ({ page }) => {
+  test('Drag element within box', async ({ homePage, page }) => {
     await page.goto('/draggable');
     const draggable = page.locator('div#sample-box');
-    const initCoord = await getElementCoordinates(draggable);
+    const initCoord = await homePage.getElementCoordinates(draggable);
 
     await page.mouse.move(initCoord.x, initCoord.y, { steps: 10 });
     await draggable.hover();
@@ -13,7 +14,7 @@ test.describe('Interacting with drag and drop element', () => {
     await page.mouse.move(initCoord.x + 200, initCoord.y + 200, { steps: 10 });
     await page.mouse.up();
 
-    const finishCoord = await getElementCoordinates(draggable);
+    const finishCoord = await homePage.getElementCoordinates(draggable);
 
     expect(initCoord.x).toBeLessThan(finishCoord.x);
     expect(initCoord.y).toBeLessThan(finishCoord.y);
@@ -28,12 +29,12 @@ test.describe('Interacting with drag and drop element', () => {
     expect(await destination.locator('p').textContent()).toEqual('Dropped!');
   });
 
-  test('Drag and drop element to destination list', async ({ page }) => {
+  test('Drag and drop element to destination list', async ({ homePage, page }) => {
     await page.goto('/sortable');
     const draggable = page.locator('div#cdk-drop-list-0 > div').first();
     const destination = page.locator('div#cdk-drop-list-1');
-    const initCoord = await getElementCoordinates(draggable);
-    const destinationCoord = await getElementCoordinates(destination);
+    const initCoord = await homePage.getElementCoordinates(draggable);
+    const destinationCoord = await homePage.getElementCoordinates(destination);
 
     await page.mouse.move(initCoord.x, initCoord.y, { steps: 10 });
     await draggable.hover();
@@ -46,10 +47,10 @@ test.describe('Interacting with drag and drop element', () => {
     expect(items.length).toEqual(6);
   });
 
-  test('Drag and drop to select items from list', async ({ page }) => {
+  test('Drag and drop to select items from list', async ({ homePage, page }) => {
     await page.goto('/selectable');
     const list = page.locator('div#container');
-    const listCoord = await getElementCoordinates(list);
+    const listCoord = await homePage.getElementCoordinates(list);
 
     await page.mouse.move(listCoord.x, listCoord.y, { steps: 10 });
     await page.mouse.down();

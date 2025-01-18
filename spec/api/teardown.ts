@@ -1,7 +1,7 @@
-import { test as setup } from '@playwright/test';
+import { test as teardown } from '@playwright/test';
 import { writeFile } from 'fs/promises';
 
-setup('cleanup', async () => {
+teardown('clear saved token', async () => {
   const defaultStorage = {
     token: ''
   };

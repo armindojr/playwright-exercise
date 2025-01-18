@@ -1,7 +1,7 @@
 import { Locator, Page } from '@playwright/test';
-import { Base } from './base';
+import Base from './base.page';
 
-export class DropdownPage extends Base {
+export default class DropdownPage extends Base {
   readonly page: Page;
   readonly selectCountry: Locator;
   readonly selectFruits: Locator;

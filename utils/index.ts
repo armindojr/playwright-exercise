@@ -1,17 +1,13 @@
-import { Locator } from '@playwright/test';
-import * as storage from '../auth/api.json';
+import Ajv from 'ajv';
+const ajv = new Ajv({ allErrors: true });
 
-export async function getElementCoordinates(el: Locator) {
-  await el.waitFor({ state: 'visible' });
-  const result = await el.boundingBox();
+export function ajvCheck(schema: any, body: any) {
+  const validation = ajv.validate(schema, body);
 
-  if (result) {
-    return result;
+  if (validation) {
+    return true;
   } else {
-    throw new Error("Element doesn't have boundary or is inaccessible!");
+    console.error(`\nAJV Validation Errors: ${ajv.errorsText()}`);
+    return false;
   }
-}
-
-export async function auth() {
-  return storage.token;
 }

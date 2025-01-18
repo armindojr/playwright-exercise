@@ -1,18 +1,14 @@
-import { test, expect } from '@playwright/test';
-import { DownloadPage } from '../../pageObject/download.page';
+// import pw with fixtures
+import { test, expect } from '../../fixtures/fixtures';
 
 test.describe('Interacting with downloadable content', () => {
-  test.beforeEach(async ({ page }) => {
-    const download = new DownloadPage(page);
-
-    await download.goto();
+  test.beforeEach(async ({ downloadPage }) => {
+    await downloadPage.goto();
   });
 
-  test('Handling new downloads', async ({ page }) => {
-    const download = new DownloadPage(page);
-
-    const downloadPromise = download.downloadPromise();
-    await download.xlsFile.click();
+  test('Handling new downloads', async ({ downloadPage }) => {
+    const downloadPromise = downloadPage.downloadPromise();
+    await downloadPage.xlsFile.click();
     const downloadResolve = await downloadPromise;
 
     expect(downloadResolve.suggestedFilename()).toContain('sample');

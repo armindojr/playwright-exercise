@@ -1,52 +1,38 @@
-import { test, expect } from '@playwright/test';
-import { InputPage } from '../../pageObject/input.page';
+// import pw with fixtures
+import { test, expect } from '../../fixtures/fixtures';
 
 test.describe('Interacting with inputs', () => {
-  test.beforeEach(async ({ page }) => {
-    const input = new InputPage(page);
-
-    await input.goto();
+  test.beforeEach(async ({ inputPage }) => {
+    await inputPage.goto();
   });
 
-  test('Filling an input', async ({ page }) => {
-    const input = new InputPage(page);
+  test('Filling an input', async ({ inputPage }) => {
     const name = 'Armindo Junior';
+    await inputPage.inputFullName.fill(name);
 
-    await input.inputFullName.fill(name);
-
-    expect(await input.inputFullName.inputValue()).toEqual(name);
+    expect(await inputPage.inputFullName.inputValue()).toEqual(name);
   });
 
-  test('Pressing key', async ({ page }) => {
-    const input = new InputPage(page);
-
-    await input.inputJoin.fill('Foo Bar');
+  test('Pressing key', async ({ inputPage, page }) => {
+    await inputPage.inputJoin.fill('Foo Bar');
     await page.keyboard.press('Tab');
   });
 
-  test('Checking text', async ({ page }) => {
-    const input = new InputPage(page);
-
-    expect(await input.inputGetMe.inputValue()).toEqual('ortonikc');
+  test('Checking text', async ({ inputPage }) => {
+    expect(await inputPage.inputGetMe.inputValue()).toEqual('ortonikc');
   });
 
-  test('Clearing input', async ({ page }) => {
-    const input = new InputPage(page);
+  test('Clearing input', async ({ inputPage }) => {
+    await inputPage.inputClearMe.clear();
 
-    await input.inputClearMe.clear();
-
-    expect(await input.inputClearMe.inputValue()).toEqual('');
+    expect(await inputPage.inputClearMe.inputValue()).toEqual('');
   });
 
-  test('Checking if input is disabled', async ({ page }) => {
-    const input = new InputPage(page);
-
-    expect(await input.inputDisabled.isDisabled()).toBeTruthy();
+  test('Checking if input is disabled', async ({ inputPage }) => {
+    expect(await inputPage.inputDisabled.isDisabled()).toBeTruthy();
   });
 
-  test('Checking if input is read only', async ({ page }) => {
-    const input = new InputPage(page);
-
-    expect(await input.inputReadOnly.isEditable()).toBeFalsy();
+  test('Checking if input is read only', async ({ inputPage }) => {
+    expect(await inputPage.inputReadOnly.isEditable()).toBeFalsy();
   });
 });

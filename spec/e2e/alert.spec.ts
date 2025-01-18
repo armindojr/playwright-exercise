@@ -1,45 +1,33 @@
-import { test, expect } from '@playwright/test';
-import { AlertPage } from '../../pageObject/alert.page';
+// import pw with fixtures
+import { test, expect } from '../../fixtures/fixtures';
 
 test.describe('Interacting with alerts', () => {
-  test.beforeEach(async ({ page }) => {
-    const alerts = new AlertPage(page);
-
-    await alerts.goto();
+  test.beforeEach(async ({ alertPage }) => {
+    await alertPage.goto();
   });
 
-  test('Handling accept alert', async ({ page }) => {
-    const alerts = new AlertPage(page);
-
-    alerts.handleDialog({ type: 'alert', text: 'Hey! Welcome to LetCode' });
-
-    await alerts.btnAccept.click();
+  test('Handling accept alert', async ({ alertPage }) => {
+    alertPage.handleDialog({ type: 'alert', text: 'Hey! Welcome to LetCode' });
+    await alertPage.btnAccept.click();
   });
 
-  test('Handling confirm alert', async ({ page }) => {
-    const alerts = new AlertPage(page);
-
-    alerts.handleDialog({ type: 'confirm', text: 'Are you happy with LetCode?' });
-
-    await alerts.btnConfirm.click();
+  test('Handling confirm alert', async ({ alertPage }) => {
+    alertPage.handleDialog({ type: 'confirm', text: 'Are you happy with LetCode?' });
+    await alertPage.btnConfirm.click();
   });
 
-  test('Handling prompt alert', async ({ page }) => {
-    const alerts = new AlertPage(page);
+  test('Handling prompt alert', async ({ alertPage }) => {
     const msg = 'Armindo Junior';
+    alertPage.handleDialog({ type: 'prompt', text: 'Enter your name', msg });
+    await alertPage.btnPrompt.click();
 
-    alerts.handleDialog({ type: 'prompt', text: 'Enter your name', msg });
-    await alerts.btnPrompt.click();
-
-    expect(await alerts.textMyName.textContent()).toContain(msg);
+    expect(await alertPage.textMyName.textContent()).toContain(msg);
   });
 
-  test('Handling sweet alert', async ({ page }) => {
-    const alerts = new AlertPage(page);
+  test('Handling sweet alert', async ({ alertPage }) => {
+    await alertPage.btnSweetAlert.click();
+    await alertPage.modal.waitFor({ state: 'visible' });
 
-    await alerts.btnSweetAlert.click();
-    await alerts.modal.waitFor({ state: 'visible' });
-
-    expect(await alerts.textSweetAlert.textContent()).toContain('Modern Alert');
+    expect(await alertPage.textSweetAlert.textContent()).toContain('Modern Alert');
   });
 });

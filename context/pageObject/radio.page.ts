@@ -1,7 +1,7 @@
 import { Locator, Page } from '@playwright/test';
-import { Base } from './base';
+import Base from './base.page';
 
-export class RadioPage extends Base {
+export default class RadioPage extends Base {
   readonly page: Page;
   readonly radioYes: Locator;
   readonly radioNo: Locator;

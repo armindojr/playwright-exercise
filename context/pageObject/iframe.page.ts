@@ -1,7 +1,7 @@
 import { FrameLocator, Locator, Page } from '@playwright/test';
-import { Base } from './base';
+import Base from './base.page';
 
-export class IframePage extends Base {
+export default class IframePage extends Base {
   readonly page: Page;
   readonly frame: FrameLocator;
   readonly innerFrame: FrameLocator;

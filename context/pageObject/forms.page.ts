@@ -1,8 +1,8 @@
 import { Locator, Page } from '@playwright/test';
 import { fakerPT_BR as faker } from '@faker-js/faker';
-import { Base } from './base';
+import Base from './base.page';
 
-export class FormsPage extends Base {
+export default class FormsPage extends Base {
   readonly page: Page;
   readonly firstName: Locator;
   readonly lastName: Locator;

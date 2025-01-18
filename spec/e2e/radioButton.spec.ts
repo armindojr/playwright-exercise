@@ -1,55 +1,41 @@
-import { test, expect } from '@playwright/test';
-import { RadioPage } from '../../pageObject/radio.page';
+// import pw with fixtures
+import { test, expect } from '../../fixtures/fixtures';
 
 test.describe('Interacting with Radio buttons and checkboxes', () => {
-  test.beforeEach(async ({ page }) => {
-    const radio = new RadioPage(page);
-
-    await radio.goto();
+  test.beforeEach(async ({ radioPage }) => {
+    await radioPage.goto();
   });
 
-  test('Selecting an option on radio button', async ({ page }) => {
-    const radio = new RadioPage(page);
+  test('Selecting an option on radio button', async ({ radioPage }) => {
+    await radioPage.radioYes.check();
+    await radioPage.radioNo.check();
 
-    await radio.radioYes.check();
-    await radio.radioNo.check();
-
-    expect(await radio.radioYes.isChecked()).toBeFalsy();
-    expect(await radio.radioNo.isChecked()).toBeTruthy();
+    expect(await radioPage.radioYes.isChecked()).toBeFalsy();
+    expect(await radioPage.radioNo.isChecked()).toBeTruthy();
   });
 
-  test("Selecting radio button don't uncheck another", async ({ page }) => {
-    const radio = new RadioPage(page);
+  test("Selecting radio button don't uncheck another", async ({ radioPage }) => {
+    await radioPage.radioBug.check();
+    await radioPage.radioNoBug.check();
 
-    await radio.radioBug.check();
-    await radio.radioNoBug.check();
-
-    expect(!(await radio.radioBug.isChecked())).toBeFalsy();
+    expect(!(await radioPage.radioBug.isChecked())).toBeFalsy();
   });
 
-  test('Finding wich radio button is checked', async ({ page }) => {
-    const radio = new RadioPage(page);
-
-    expect(await radio.radioChecked.textContent()).toContain('Bar');
+  test('Finding wich radio button is checked', async ({ radioPage }) => {
+    expect(await radioPage.radioChecked.textContent()).toContain('Bar');
   });
 
-  test('Checking if radio button is enabled', async ({ page }) => {
-    const radio = new RadioPage(page);
-
-    expect(await radio.radioDisabled.isEnabled()).toBeFalsy();
+  test('Checking if radio button is enabled', async ({ radioPage }) => {
+    expect(await radioPage.radioDisabled.isEnabled()).toBeFalsy();
   });
 
-  test('Confirming if checkbox is checked', async ({ page }) => {
-    const radio = new RadioPage(page);
-
-    expect(await radio.checkboxRemember.isChecked()).toBeTruthy();
+  test('Confirming if checkbox is checked', async ({ radioPage }) => {
+    expect(await radioPage.checkboxRemember.isChecked()).toBeTruthy();
   });
 
-  test('Checking checkbox of terms agreement', async ({ page }) => {
-    const radio = new RadioPage(page);
+  test('Checking checkbox of terms agreement', async ({ radioPage }) => {
+    await radioPage.checkboxAccept.check();
 
-    await radio.checkboxAccept.check();
-
-    expect(await radio.checkboxAccept.isChecked()).toBeTruthy();
+    expect(await radioPage.checkboxAccept.isChecked()).toBeTruthy();
   });
 });

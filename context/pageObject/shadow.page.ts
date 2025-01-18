@@ -1,7 +1,7 @@
 import { Locator, Page } from '@playwright/test';
-import { Base } from './base';
+import Base from './base.page';
 
-export class ShadowPage extends Base {
+export default class ShadowPage extends Base {
   readonly page: Page;
   readonly inputFirstName: Locator;
   readonly inputLastName: Locator;

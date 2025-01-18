@@ -1,7 +1,7 @@
 import { Locator, Page, expect } from '@playwright/test';
-import { Base } from './base';
+import Base from './base.page';
 
-export class AlertPage extends Base {
+export default class AlertPage extends Base {
   readonly page: Page;
   readonly btnAccept: Locator;
   readonly btnConfirm: Locator;

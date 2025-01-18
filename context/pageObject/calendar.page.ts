@@ -1,7 +1,7 @@
 import { Locator, Page } from '@playwright/test';
-import { Base } from './base';
+import Base from './base.page';
 
-export class CalendarPage extends Base {
+export default class CalendarPage extends Base {
   readonly page: Page;
   readonly datepicker: Locator;
   readonly datepickerRange: Locator;

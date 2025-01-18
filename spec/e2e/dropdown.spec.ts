@@ -1,51 +1,39 @@
-import { test, expect } from '@playwright/test';
-import { DropdownPage } from '../../pageObject/dropdown.page';
+// import pw with fixtures
+import { test, expect } from '../../fixtures/fixtures';
 
 test.describe('Interacting with dropdowns', () => {
-  test.beforeEach(async ({ page }) => {
-    const dropdown = new DropdownPage(page);
-
-    await dropdown.goto();
+  test.beforeEach(async ({ dropdownPage }) => {
+    await dropdownPage.goto();
   });
 
-  test('Selecting a item from dropdown', async ({ page }) => {
-    const dropdown = new DropdownPage(page);
+  test('Selecting a item from dropdown', async ({ dropdownPage }) => {
+    await dropdownPage.selectFruits.selectOption({ label: 'Apple' });
 
-    await dropdown.selectFruits.selectOption({ label: 'Apple' });
-
-    expect(await dropdown.textSuccess.textContent()).toContain('Apple');
+    expect(await dropdownPage.textSuccess.textContent()).toContain('Apple');
   });
 
-  test('Selecting a item from multi-selector', async ({ page }) => {
-    const dropdown = new DropdownPage(page);
+  test('Selecting a item from multi-selector', async ({ dropdownPage }) => {
+    await dropdownPage.selectSuperheroes.selectOption({ label: 'Batman' });
 
-    await dropdown.selectSuperheroes.selectOption({ label: 'Batman' });
-
-    expect(await dropdown.textSuccess.textContent()).toContain('Batman');
+    expect(await dropdownPage.textSuccess.textContent()).toContain('Batman');
   });
 
-  test('Selecting two items from multi-selector', async ({ page }) => {
-    const dropdown = new DropdownPage(page);
+  test('Selecting two items from multi-selector', async ({ dropdownPage }) => {
+    await dropdownPage.selectSuperheroes.selectOption([{ label: 'Batman' }, { label: 'Batwoman' }]);
 
-    await dropdown.selectSuperheroes.selectOption([{ label: 'Batman' }, { label: 'Batwoman' }]);
-
-    expect(await dropdown.textSuccess.textContent()).toContain('Batman');
+    expect(await dropdownPage.textSuccess.textContent()).toContain('Batman');
   });
 
-  test('Selecting last item from dropdown', async ({ page }) => {
-    const dropdown = new DropdownPage(page);
+  test('Selecting last item from dropdown', async ({ dropdownPage }) => {
+    const opts = await dropdownPage.optionsLang.all();
+    await dropdownPage.selectLang.selectOption({ index: opts.length - 1 });
 
-    const opts = await dropdown.optionsLang.all();
-    await dropdown.selectLang.selectOption({ index: opts.length - 1 });
-
-    expect(await dropdown.textSuccess.textContent()).toContain('C#');
+    expect(await dropdownPage.textSuccess.textContent()).toContain('C#');
   });
 
-  test('Selecting specific item from dropdown and verify value', async ({ page }) => {
-    const dropdown = new DropdownPage(page);
+  test('Selecting specific item from dropdown and verify value', async ({ dropdownPage }) => {
+    await dropdownPage.selectCountry.selectOption({ value: 'India' });
 
-    await dropdown.selectCountry.selectOption({ value: 'India' });
-
-    expect(await dropdown.selectCountry.inputValue()).toEqual('India');
+    expect(await dropdownPage.selectCountry.inputValue()).toEqual('India');
   });
 });
