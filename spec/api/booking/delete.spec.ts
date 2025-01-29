@@ -1,5 +1,5 @@
 // import pw with fixtures
-import { test } from '../../../fixtures/fixtures';
+import { test } from '../../../fixtures';
 
 test.describe('Delete booking', () => {
   let bookingid: string;

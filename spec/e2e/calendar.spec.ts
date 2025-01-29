@@ -1,5 +1,5 @@
 // import pw with fixtures
-import { test, expect } from '../../fixtures/fixtures';
+import { test } from '../../fixtures';
 
 test.describe('Interacting with calendar', () => {
   test.beforeEach(async ({ calendarPage }) => {
@@ -7,40 +7,25 @@ test.describe('Interacting with calendar', () => {
   });
 
   test('Selecting today from static calendar', async ({ calendarPage }) => {
-    const today = new Date().toLocaleString('en-US', calendarPage.formatDate);
-    await calendarPage.btnToday.click();
-
-    expect(await calendarPage.textSelected.textContent()).toContain(`${today}`);
+    const today = calendarPage.formatDate(new Date());
+    await calendarPage.selectToday();
+    await calendarPage.checkDateSelected(`${today}`);
   });
 
   test('Selecting today from static calendar and clear input', async ({ calendarPage }) => {
-    await calendarPage.btnToday.click();
-    await calendarPage.btnClear.click();
-
-    await expect(calendarPage.textSelected).toBeHidden();
+    await calendarPage.selectAndClear();
+    await calendarPage.checkDateHidden();
   });
 
   test('Selecting today from static calendar and add 10 minutes', async ({ calendarPage }) => {
-    const clickCount = 10;
-    await calendarPage.btnToday.click();
-    const actual = await calendarPage.textSelected.textContent();
-    const today = new Date(actual ? actual : '');
-    today.setMinutes(today.getMinutes() + clickCount);
-    const added = today.toLocaleString('en-US', calendarPage.formatDate);
-    await calendarPage.btnNext.click({ clickCount });
-
-    expect(await calendarPage.textSelected.textContent()).toContain(`${added}`);
+    const date = await calendarPage.addMinutes(10);
+    await calendarPage.checkDateSelected(`${date}`);
   });
 
   test('Selecting range date', async ({ calendarPage }) => {
-    await calendarPage.datepickerRange.click();
-    await calendarPage.btnYearRange.click();
-    await calendarPage.btnConfirmYear.click();
-    await calendarPage.btnMonthRange.click();
-    await calendarPage.btnConfirmMonth.click();
-    await calendarPage.btnDayFrom.click();
-    await calendarPage.btnDayTo.click();
-
-    expect(await calendarPage.textSelected.textContent()).toContain('01-Jan-2023 to 12-Jan-2023');
+    const from = { day: '1', month: '01', year: '2023' };
+    const to = { day: '12', month: '02', year: '2024' };
+    await calendarPage.selectRange({ from, to });
+    await calendarPage.checkDateSelected('01-Jan-2023 to 12-Feb-2024');
   });
 });

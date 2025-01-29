@@ -1,5 +1,5 @@
 // import pw with fixtures
-import { test, expect } from '../../fixtures/fixtures';
+import { test, expect } from '../../fixtures';
 
 test.describe('Interacting with iframes', () => {
   test.beforeEach(async ({ iframePage }) => {

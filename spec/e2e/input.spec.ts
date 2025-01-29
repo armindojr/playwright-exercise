@@ -1,5 +1,5 @@
 // import pw with fixtures
-import { test, expect } from '../../fixtures/fixtures';
+import { test, expect } from '../../fixtures';
 
 test.describe('Interacting with inputs', () => {
   test.beforeEach(async ({ inputPage }) => {

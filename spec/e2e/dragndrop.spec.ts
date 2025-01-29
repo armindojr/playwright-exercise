@@ -1,5 +1,5 @@
 // import pw with fixtures
-import { test, expect } from '../../fixtures/fixtures';
+import { test, expect } from '../../fixtures';
 
 // TODO: Create page for dnd
 test.describe('Interacting with drag and drop element', () => {

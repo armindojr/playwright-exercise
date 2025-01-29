@@ -1,5 +1,5 @@
 // import pw with fixtures
-import { test } from '../../../fixtures/fixtures';
+import { test } from '../../../fixtures';
 
 test.describe('Read booking', () => {
   test('Get all booking ids', async ({ bookingRoute }) => {

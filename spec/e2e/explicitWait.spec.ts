@@ -1,5 +1,5 @@
 // import pw with fixtures
-import { test, expect } from '../../fixtures/fixtures';
+import { test, expect } from '../../fixtures';
 
 test.describe('Creating explicit wait during test', () => {
   test('Wait for button to be visible', async ({ buttonPage, page }) => {

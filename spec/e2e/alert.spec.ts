@@ -1,5 +1,5 @@
 // import pw with fixtures
-import { test, expect } from '../../fixtures/fixtures';
+import { test } from '../../fixtures';
 
 test.describe('Interacting with alerts', () => {
   test.beforeEach(async ({ alertPage }) => {
@@ -7,27 +7,24 @@ test.describe('Interacting with alerts', () => {
   });
 
   test('Handling accept alert', async ({ alertPage }) => {
-    alertPage.handleDialog({ type: 'alert', text: 'Hey! Welcome to LetCode' });
-    await alertPage.btnAccept.click();
+    alertPage.handleDialog('alert');
+    await alertPage.startAccept();
   });
 
   test('Handling confirm alert', async ({ alertPage }) => {
-    alertPage.handleDialog({ type: 'confirm', text: 'Are you happy with LetCode?' });
-    await alertPage.btnConfirm.click();
+    alertPage.handleDialog('confirm');
+    await alertPage.startConfirm();
   });
 
   test('Handling prompt alert', async ({ alertPage }) => {
-    const msg = 'Armindo Junior';
-    alertPage.handleDialog({ type: 'prompt', text: 'Enter your name', msg });
-    await alertPage.btnPrompt.click();
-
-    expect(await alertPage.textMyName.textContent()).toContain(msg);
+    const name = 'Armindo Junior';
+    alertPage.handleDialog('prompt', name);
+    await alertPage.startPrompt();
+    await alertPage.checkPrompt(name);
   });
 
   test('Handling sweet alert', async ({ alertPage }) => {
-    await alertPage.btnSweetAlert.click();
-    await alertPage.modal.waitFor({ state: 'visible' });
-
-    expect(await alertPage.textSweetAlert.textContent()).toContain('Modern Alert');
+    await alertPage.startSweetAlert();
+    await alertPage.checkSweetAlert('Modern Alert');
   });
 });

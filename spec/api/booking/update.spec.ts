@@ -1,5 +1,5 @@
 // import pw with fixtures
-import { test } from '../../../fixtures/fixtures';
+import { test } from '../../../fixtures';
 
 test.describe('Update booking', () => {
   // Complete update with PUT method

@@ -1,5 +1,5 @@
 // import pw with fixtures
-import { test, expect } from '../../fixtures/fixtures';
+import { test, expect } from '../../fixtures';
 
 test.describe('Interacting with multiple elements', () => {
   test.beforeEach(async ({ elementsPage }) => {
