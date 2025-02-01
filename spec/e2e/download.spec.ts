@@ -1,5 +1,5 @@
-// import pw with fixtures
-import { test, expect } from '../../fixtures';
+// Import Playwright fixtures and expectations
+import { test } from '../../fixtures';
 
 test.describe('Interacting with downloadable content', () => {
   test.beforeEach(async ({ downloadPage }) => {
@@ -8,10 +8,9 @@ test.describe('Interacting with downloadable content', () => {
 
   test('Handling new downloads', async ({ downloadPage }) => {
     const downloadPromise = downloadPage.downloadPromise();
-    await downloadPage.xlsFile.click();
+    await downloadPage.triggerDownload();
     const downloadResolve = await downloadPromise;
-
-    expect(downloadResolve.suggestedFilename()).toContain('sample');
+    downloadPage.checkFilename(downloadResolve.suggestedFilename(), 'sample');
     await downloadResolve.delete();
   });
 });

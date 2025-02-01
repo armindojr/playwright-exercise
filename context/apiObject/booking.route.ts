@@ -1,13 +1,6 @@
-// import types
 import { APIRequestContext, APIResponse } from '@playwright/test';
-
-// import pw instance
 import { expect } from '@playwright/test';
-
-// import auth token
 import * as auth from '../../auth/api.json';
-
-// import base route
 import Base from './base.route';
 
 export default class BookingRoute extends Base {
@@ -75,15 +68,13 @@ export default class BookingRoute extends Base {
   }
 
   async partialUpdate(id: string) {
-    let data = {
-      firstname: 'James'
-    };
-
     return await this.req.patch(`/booking/${id}`, {
       headers: {
         Cookie: this.token
       },
-      data
+      data: {
+        firstname: 'James'
+      }
     });
   }
 

@@ -13,6 +13,11 @@ export default [
     }
   },
   {
-    ignores: ['**/node_modules']
+    ignores: ['**/node_modules', '**/test-results', '**/playwright-report']
+  },
+  {
+    rules: {
+      '@typescript-eslint/no-explicit-any': 'off'
+    }
   }
 ];

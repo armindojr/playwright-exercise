@@ -1,16 +1,9 @@
-// import types
 import { APIResponse } from '@playwright/test';
-
-// import pw instance
 import { expect } from '@playwright/test';
-
-// import utils
 import { ajvCheck } from '../../utils';
 
 export default class Base {
-  constructor() {}
-
-  async validateStatus(res: APIResponse, code: Number) {
+  async validateStatus(res: APIResponse, code: number) {
     expect(res.status()).toEqual(code);
   }
 

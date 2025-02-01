@@ -37,35 +37,63 @@ export default class AlertPage extends Base {
     this.modalContent = this.page.locator('div.modal-content');
   }
 
+  /**
+   * Navigates to the alert page at '/alert' URL.
+   */
   async goto() {
     await super.goto('/alert');
   }
 
+  /**
+   * Clicks the "Accept" button to trigger an alert dialog.
+   */
   async startAccept() {
     await this.btnAccept.click();
   }
 
+  /**
+   * Clicks the "Confirm" button to trigger a confirm dialog.
+   */
   async startConfirm() {
     await this.btnConfirm.click();
   }
 
+  /**
+   * Clicks the "Prompt" button to trigger a prompt dialog.
+   */
   async startPrompt() {
     await this.btnPrompt.click();
   }
 
+  /**
+   * Clicks the "Sweet Alert" button to trigger a SweetAlert-style dialog.
+   */
   async startSweetAlert() {
     await this.btnSweetAlert.click();
   }
 
+  /**
+   * Verifies that the prompt text displays correctly in the user name field.
+   * @param text - The expected text to check.
+   */
   async checkPrompt(text: string) {
     await super.checkText(this.textMyName, text);
   }
 
+  /**
+   * Verifies the content of a SweetAlert dialog.
+   * @param text - The expected text to look for in the dialog.
+   */
   async checkSweetAlert(text: string) {
     await this.modal.waitFor({ state: 'visible' });
     expect(await this.textSweetAlert.textContent()).toContain(text);
   }
 
+  /**
+   * Handles different types of dialog events (alert, confirm, prompt).
+   * @param type - The type of dialog to handle ('alert', 'confirm', or 'prompt').
+   * @param msg - Optional message to send when handling the dialog.
+   */
   async handleDialog(type: string, msg?: string) {
     this.page.on('dialog', async dialog => {
       expect(dialog.type()).toContain(type);

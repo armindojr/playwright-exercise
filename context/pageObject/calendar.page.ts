@@ -45,23 +45,42 @@ export default class CalendarPage extends Base {
     this.textSelected = this.page.getByText('You have selected');
   }
 
+  /**
+   * Navigates to the calendar page.
+   */
   async goto() {
     await super.goto('/calendar');
   }
 
+  /**
+   * Formats a given date into a string using the specified format options.
+   * @param date - The Date object to be formatted.
+   * @returns A string representing the formatted date.
+   */
   formatDate(date: Date) {
     return date.toLocaleString('en-US', format);
   }
 
+  /**
+   * Selects today's date from the calendar.
+   */
   async selectToday() {
     await this.btnToday.click();
   }
 
+  /**
+   * Selects today's date and then clears any selected dates.
+   */
   async selectAndClear() {
     await this.selectToday();
     await this.btnClear.click();
   }
 
+  /**
+   * Adds a specified number of minutes to the current time and selects the new time from the calendar.
+   * @param clickCount - The number of times to click the next minute button.
+   * @returns A string representing the formatted date after adding minutes.
+   */
   async addMinutes(clickCount: number) {
     await this.selectToday();
     const actualDate = await this.textSelected.textContent();
@@ -72,6 +91,14 @@ export default class CalendarPage extends Base {
     return this.formatDate(today);
   }
 
+  /**
+   * Selects a range of dates from the calendar using provided day, month, and year for both start and end of the range.
+   * @param options - An object containing details about the date range to be selected:
+   *                {
+   *                  from: { day: string; month: string; year: string },
+   *                  to: { day: string; month: string; year: string }
+   *                }
+   */
   async selectRange(options: {
     from: { day: string; month: string; year: string };
     to: { day: string; month: string; year: string };
@@ -94,10 +121,17 @@ export default class CalendarPage extends Base {
     await this.btnDayRange.getByRole('button', { name: options.to.day, exact: true }).click();
   }
 
+  /**
+   * Checks if the text of the selected date contains a specific string.
+   * @param text - The string to check against the text of the selected date.
+   */
   async checkDateSelected(text: string) {
     expect(await this.textSelected.textContent()).toContain(text);
   }
 
+  /**
+   * Asserts that the text element showing the selected date is hidden.
+   */
   async checkDateHidden() {
     await expect(this.textSelected).toBeHidden();
   }

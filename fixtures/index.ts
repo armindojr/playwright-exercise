@@ -1,5 +1,5 @@
 // import pw instance
-import { test as fixture, expect as validate } from '@playwright/test';
+import { test as base } from '@playwright/test';
 
 // import API Objects
 import BookingRoute from '../context/apiObject/booking.route';
@@ -9,6 +9,7 @@ import AjaxPage from '../context/pageObject/ajax.page';
 import AlertPage from '../context/pageObject/alert.page';
 import ButtonPage from '../context/pageObject/button.page';
 import CalendarPage from '../context/pageObject/calendar.page';
+import DragPage from '../context/pageObject/drag.page';
 import DownloadPage from '../context/pageObject/download.page';
 import DropdownPage from '../context/pageObject/dropdown.page';
 import ElementsPage from '../context/pageObject/elements.page';
@@ -20,7 +21,26 @@ import RadioPage from '../context/pageObject/radio.page';
 import ShadowPage from '../context/pageObject/shadow.page';
 import WindowPage from '../context/pageObject/window.page';
 
-export const test = fixture.extend({
+type Fixtures = {
+  bookingRoute: BookingRoute;
+  ajaxPage: AjaxPage;
+  alertPage: AlertPage;
+  buttonPage: ButtonPage;
+  calendarPage: CalendarPage;
+  dragPage: DragPage;
+  downloadPage: DownloadPage;
+  dropdownPage: DropdownPage;
+  elementsPage: ElementsPage;
+  formsPage: FormsPage;
+  homePage: HomePage;
+  iframePage: IframePage;
+  inputPage: InputPage;
+  radioPage: RadioPage;
+  shadowPage: ShadowPage;
+  windowPage: WindowPage;
+};
+
+export const test = base.extend<Fixtures>({
   // Routes
   bookingRoute: async ({ request }, use) => {
     await use(new BookingRoute(request));
@@ -41,6 +61,10 @@ export const test = fixture.extend({
 
   calendarPage: async ({ page }, use) => {
     await use(new CalendarPage(page));
+  },
+
+  dragPage: async ({ page }, use) => {
+    await use(new DragPage(page));
   },
 
   downloadPage: async ({ page }, use) => {
@@ -84,4 +108,4 @@ export const test = fixture.extend({
   }
 });
 
-export const expect = validate;
+export { expect } from '@playwright/test';
