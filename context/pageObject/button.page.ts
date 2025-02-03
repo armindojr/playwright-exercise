@@ -12,11 +12,11 @@ export default class ButtonPage extends Base {
   constructor(page: Page) {
     super(page);
     this.page = page;
-    this.btnHome = this.page.locator('button#home');
-    this.btnPosition = this.page.locator('button#position');
-    this.btnColor = this.page.locator('button#color');
-    this.btnProperty = this.page.locator('button#property');
-    this.btnDisabled = this.page.locator('button#isDisabled');
+    this.btnHome = this.page.locator('#home');
+    this.btnPosition = this.page.locator('#position');
+    this.btnColor = this.page.locator('#color');
+    this.btnProperty = this.page.locator('#property');
+    this.btnDisabled = this.page.locator('#isDisabled');
   }
 
   /**
@@ -74,7 +74,12 @@ export default class ButtonPage extends Base {
   async longPressButton() {
     const buttonList = await this.btnDisabled.all();
     await buttonList[1].click({ delay: 5000 });
-    return await buttonList[1].textContent();
+    const text = await buttonList[1].textContent();
+    if (text === null) {
+      return '';
+    } else {
+      return text;
+    }
   }
 
   /**

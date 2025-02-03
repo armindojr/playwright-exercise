@@ -6,10 +6,9 @@ test.describe('Interacting with form', () => {
     await formsPage.goto();
   });
 
-  test('Filling form with random data', async ({ formsPage, page }) => {
+  test('Filling form with random data', async ({ formsPage }) => {
+    const msg = 'The account has been successfully created!';
     await formsPage.fillForm();
-    await formsPage.submit.click();
-    // Add assertions to check if form was filled correctly
-    await page.waitForTimeout(2000);
+    await formsPage.checkSubmition(msg);
   });
 });

@@ -1,5 +1,5 @@
 // import pw with fixtures
-import { test, expect } from '../../fixtures';
+import { test } from '../../fixtures';
 
 test.describe('Interacting with iframes', () => {
   test.beforeEach(async ({ iframePage }) => {
@@ -7,16 +7,15 @@ test.describe('Interacting with iframes', () => {
   });
 
   test('Filling inputs inside iframe', async ({ iframePage }) => {
-    await iframePage.inputName.fill('Armindo');
-    await iframePage.inputLname.fill('Junior');
-
-    expect(await iframePage.inputName.inputValue()).toEqual('Armindo');
-    expect(await iframePage.inputLname.inputValue()).toEqual('Junior');
+    const firstName = 'Armindo';
+    const lastName = 'Junior';
+    await iframePage.fillName(firstName, lastName);
+    await iframePage.checkName(firstName, lastName);
   });
 
   test('Filling an input inside nested iframe', async ({ iframePage }) => {
-    await iframePage.inputEmail.fill('test@mailinator.com');
-
-    expect(await iframePage.inputEmail.inputValue()).toEqual('test@mailinator.com');
+    const email = 'test@mailinator.com';
+    await iframePage.fillEmail(email);
+    await iframePage.checkEmail(email);
   });
 });

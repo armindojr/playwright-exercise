@@ -6,7 +6,7 @@ export default class Base {
 
   constructor(page: Page) {
     this.page = page;
-    this.btnWorkspaces = this.page.locator('a#testing');
+    this.btnWorkspaces = this.page.locator('#testing');
   }
 
   /**
@@ -25,7 +25,17 @@ export default class Base {
    * @param {string} text - The text to search for within the element's content.
    */
   async checkText(el: Locator, text: string) {
-    expect(await el.textContent()).toContain(text);
+    await expect(el).toContainText(text);
+  }
+
+  /**
+   * Verifies that an input element has a specified value.
+   *
+   * @param {Locator} el - The locator identifying the input element to check.
+   * @param {string} text - The expected value of the input.
+   */
+  async checkInputValue(el: Locator, text: string) {
+    await expect(el).toHaveValue(text);
   }
 
   /**

@@ -32,16 +32,12 @@ export default class CalendarPage extends Base {
     this.page = page;
     this.datepicker = this.page.locator('nwb-date-picker');
     this.btnToday = this.datepicker.getByRole('button', { name: 'Today' });
-    this.btnNext = this.datepicker.locator('.timepicker-minutes > span.timepicker-next');
+    this.btnNext = this.datepicker.locator('.timepicker-minutes > .timepicker-next');
     this.btnClear = this.datepicker.getByRole('button', { name: 'Clear' });
-    this.modalRange = this.page.locator('div.datepicker.is-active');
-    this.btnYearRange = this.modalRange.locator(
-      'div.datepicker-nav > div > div.datepicker-nav-year'
-    );
-    this.btnMonthRange = this.modalRange.locator(
-      'div.datepicker-nav > div > div.datepicker-nav-month'
-    );
-    this.btnDayRange = this.modalRange.locator('div.is-current-month');
+    this.modalRange = this.page.locator('.datepicker.is-active');
+    this.btnYearRange = this.modalRange.locator('.datepicker-nav-year');
+    this.btnMonthRange = this.modalRange.locator('.datepicker-nav-month');
+    this.btnDayRange = this.modalRange.locator('.is-current-month');
     this.textSelected = this.page.getByText('You have selected');
   }
 
@@ -126,7 +122,7 @@ export default class CalendarPage extends Base {
    * @param text - The string to check against the text of the selected date.
    */
   async checkDateSelected(text: string) {
-    expect(await this.textSelected.textContent()).toContain(text);
+    await expect(this.textSelected).toContainText(text);
   }
 
   /**

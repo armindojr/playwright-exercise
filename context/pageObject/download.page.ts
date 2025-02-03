@@ -8,7 +8,7 @@ export default class DownloadPage extends Base {
   constructor(page: Page) {
     super(page);
     this.page = page;
-    this.xlsFile = this.page.locator('a#xls');
+    this.xlsFile = this.page.locator('#xls');
   }
 
   /**

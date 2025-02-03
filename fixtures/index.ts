@@ -12,8 +12,8 @@ import CalendarPage from '../context/pageObject/calendar.page';
 import DragPage from '../context/pageObject/drag.page';
 import DownloadPage from '../context/pageObject/download.page';
 import DropdownPage from '../context/pageObject/dropdown.page';
-import ElementsPage from '../context/pageObject/elements.page';
 import FormsPage from '../context/pageObject/forms.page';
+import GitInfoPage from '../context/pageObject/gitInfo.page';
 import HomePage from '../context/pageObject/home.page';
 import IframePage from '../context/pageObject/iframe.page';
 import InputPage from '../context/pageObject/input.page';
@@ -30,8 +30,8 @@ type Fixtures = {
   dragPage: DragPage;
   downloadPage: DownloadPage;
   dropdownPage: DropdownPage;
-  elementsPage: ElementsPage;
   formsPage: FormsPage;
+  gitInfoPage: GitInfoPage;
   homePage: HomePage;
   iframePage: IframePage;
   inputPage: InputPage;
@@ -75,12 +75,12 @@ export const test = base.extend<Fixtures>({
     await use(new DropdownPage(page));
   },
 
-  elementsPage: async ({ page }, use) => {
-    await use(new ElementsPage(page));
-  },
-
   formsPage: async ({ page }, use) => {
     await use(new FormsPage(page));
+  },
+
+  gitInfoPage: async ({ page }, use) => {
+    await use(new GitInfoPage(page));
   },
 
   homePage: async ({ page }, use) => {

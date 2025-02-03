@@ -10,7 +10,7 @@ export default class WindowPage extends Base {
     super(page);
     this.page = page;
     this.context = context;
-    this.btnHome = this.page.locator('button#home');
+    this.btnHome = this.page.locator('#home');
   }
 
   async goto() {

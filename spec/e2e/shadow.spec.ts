@@ -1,18 +1,25 @@
 // import pw with fixtures
-import { test, expect } from '../../fixtures';
+import { test } from '../../fixtures';
 
 test.describe('Interacting with shadow DOM', () => {
   test.beforeEach(async ({ shadowPage }) => {
     await shadowPage.goto();
   });
 
-  test('Filling inputs inside shadow DOM', async ({ shadowPage }) => {
-    await shadowPage.inputFirstName.fill('Armindo');
+  test('Filling inputs inside open shadow DOM', async ({ shadowPage }) => {
+    const name = 'Armindo';
+    await shadowPage.fillFirstName(name);
+    await shadowPage.checkFirstName(name);
+  });
 
-    expect(await shadowPage.inputFirstName.inputValue()).toEqual('Armindo');
-
-    // Playwright doesn't works with closed shadow dom
-    // await shadowPage.inputLastName.fill('Junior');
-    // await shadowPage.inputEmail.fill('test@mailinator.com');
+  /**
+   * Playwright doesn't support closed shadow dom
+   * Reference: https://playwright.dev/docs/locators#locate-in-shadow-dom
+   */
+  test.skip('Filling inputs inside closed shadow DOM', async ({ shadowPage }) => {
+    const lastName = 'Junior';
+    const email = 'test@mailinator.com';
+    await shadowPage.fillClosedShadow(lastName, email);
+    await shadowPage.checkClosed(lastName, email);
   });
 });

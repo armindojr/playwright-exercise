@@ -19,12 +19,12 @@ export default class DragPage extends Base {
   constructor(page: Page) {
     super(page);
     this.page = page;
-    this.divSampleBox = this.page.locator('div#sample-box');
-    this.dragBox = this.page.locator('div#draggable');
-    this.destBox = this.page.locator('div#droppable');
+    this.divSampleBox = this.page.locator('#sample-box');
+    this.dragBox = this.page.locator('#draggable');
+    this.destBox = this.page.locator('#droppable');
     this.todoList = this.page.locator('#cdk-drop-list-0');
     this.doneList = this.page.locator('#cdk-drop-list-1');
-    this.itemList = this.todoList.getByText(' Go home');
+    this.itemList = this.todoList.getByText('Go home');
     this.firstList = this.page.getByText('Postman');
     this.lastList = this.page.getByText('Webdriver.io');
     this.selectedItems = this.page.locator('.ui-selected');

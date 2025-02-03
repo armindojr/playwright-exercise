@@ -10,8 +10,8 @@ export default class AjaxPage extends Base {
   constructor(page: Page) {
     super(page);
     this.page = page;
-    this.btnTrigger = this.page.locator('button#ajaxButton');
-    this.successMessage = this.page.locator('p.bg-success');
+    this.btnTrigger = this.page.locator('#ajaxButton');
+    this.successMessage = this.page.locator('.bg-success');
     this.route = 'http://www.uitestingplayground.com/ajaxdata';
   }
 
@@ -50,6 +50,6 @@ export default class AjaxPage extends Base {
    */
   async validateMsg(text: string) {
     await this.successMessage.waitFor({ state: 'visible', timeout: 18000 });
-    expect(await this.successMessage.textContent()).toContain(text);
+    await expect(this.successMessage).toContainText(text);
   }
 }

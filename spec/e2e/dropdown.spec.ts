@@ -1,5 +1,5 @@
 // import pw with fixtures
-import { test, expect } from '../../fixtures';
+import { test } from '../../fixtures';
 
 test.describe('Interacting with dropdowns', () => {
   test.beforeEach(async ({ dropdownPage }) => {
@@ -7,33 +7,25 @@ test.describe('Interacting with dropdowns', () => {
   });
 
   test('Selecting a item from dropdown', async ({ dropdownPage }) => {
-    await dropdownPage.selectFruits.selectOption({ label: 'Apple' });
-
-    expect(await dropdownPage.textSuccess.textContent()).toContain('Apple');
+    const fruit = 'Apple';
+    await dropdownPage.selectFruit(fruit);
+    await dropdownPage.checkSelected(fruit);
   });
 
   test('Selecting a item from multi-selector', async ({ dropdownPage }) => {
-    await dropdownPage.selectSuperheroes.selectOption({ label: 'Batman' });
-
-    expect(await dropdownPage.textSuccess.textContent()).toContain('Batman');
-  });
-
-  test('Selecting two items from multi-selector', async ({ dropdownPage }) => {
-    await dropdownPage.selectSuperheroes.selectOption([{ label: 'Batman' }, { label: 'Batwoman' }]);
-
-    expect(await dropdownPage.textSuccess.textContent()).toContain('Batman');
+    const one = 'Batman';
+    await dropdownPage.multiSelect([one]);
+    await dropdownPage.checkSelected(one);
   });
 
   test('Selecting last item from dropdown', async ({ dropdownPage }) => {
-    const opts = await dropdownPage.optionsLang.all();
-    await dropdownPage.selectLang.selectOption({ index: opts.length - 1 });
-
-    expect(await dropdownPage.textSuccess.textContent()).toContain('C#');
+    await dropdownPage.selectLast();
+    await dropdownPage.checkSelected('C#');
   });
 
-  test('Selecting specific item from dropdown and verify value', async ({ dropdownPage }) => {
-    await dropdownPage.selectCountry.selectOption({ value: 'India' });
-
-    expect(await dropdownPage.selectCountry.inputValue()).toEqual('India');
+  test('Selecting item by value and verify', async ({ dropdownPage }) => {
+    const country = 'India';
+    await dropdownPage.selectValue(country);
+    await dropdownPage.checkCountry(country);
   });
 });

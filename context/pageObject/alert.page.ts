@@ -27,12 +27,12 @@ export default class AlertPage extends Base {
   constructor(page: Page) {
     super(page);
     this.page = page;
-    this.btnAccept = this.page.locator('button#accept');
-    this.btnConfirm = this.page.locator('button#confirm');
-    this.btnPrompt = this.page.locator('button#prompt');
-    this.btnSweetAlert = this.page.locator('button#modern');
-    this.textMyName = this.page.locator('p#myName');
-    this.textSweetAlert = this.page.locator('p.title');
+    this.btnAccept = this.page.locator('#accept');
+    this.btnConfirm = this.page.locator('#confirm');
+    this.btnPrompt = this.page.locator('#prompt');
+    this.btnSweetAlert = this.page.locator('#modern');
+    this.textMyName = this.page.locator('#myName');
+    this.textSweetAlert = this.page.locator('.card-content > .title');
     this.modal = this.page.locator('div.modal.is-active');
     this.modalContent = this.page.locator('div.modal-content');
   }
@@ -86,7 +86,7 @@ export default class AlertPage extends Base {
    */
   async checkSweetAlert(text: string) {
     await this.modal.waitFor({ state: 'visible' });
-    expect(await this.textSweetAlert.textContent()).toContain(text);
+    await expect(this.textSweetAlert).toContainText(text);
   }
 
   /**

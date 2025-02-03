@@ -1,5 +1,5 @@
 // import pw with fixtures
-import { test, expect } from '../../fixtures';
+import { test } from '../../fixtures';
 
 test.describe('Interacting with inputs', () => {
   test.beforeEach(async ({ inputPage }) => {
@@ -8,31 +8,29 @@ test.describe('Interacting with inputs', () => {
 
   test('Filling an input', async ({ inputPage }) => {
     const name = 'Armindo Junior';
-    await inputPage.inputFullName.fill(name);
-
-    expect(await inputPage.inputFullName.inputValue()).toEqual(name);
+    await inputPage.fillName(name);
+    await inputPage.checkName(name);
   });
 
-  test('Pressing key', async ({ inputPage, page }) => {
-    await inputPage.inputJoin.fill('Foo Bar');
-    await page.keyboard.press('Tab');
+  test('Pressing key', async ({ inputPage }) => {
+    await inputPage.fillAndFocus('Foo Bar');
+    await inputPage.checkFocus();
   });
 
   test('Checking text', async ({ inputPage }) => {
-    expect(await inputPage.inputGetMe.inputValue()).toEqual('ortonikc');
+    await inputPage.checkTextInside('ortonikc');
   });
 
   test('Clearing input', async ({ inputPage }) => {
-    await inputPage.inputClearMe.clear();
-
-    expect(await inputPage.inputClearMe.inputValue()).toEqual('');
+    await inputPage.clearInput();
+    await inputPage.checkClearedInput();
   });
 
   test('Checking if input is disabled', async ({ inputPage }) => {
-    expect(await inputPage.inputDisabled.isDisabled()).toBeTruthy();
+    await inputPage.checkDisabled();
   });
 
   test('Checking if input is read only', async ({ inputPage }) => {
-    expect(await inputPage.inputReadOnly.isEditable()).toBeFalsy();
+    await inputPage.checkEditable();
   });
 });
